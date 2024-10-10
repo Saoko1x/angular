@@ -1,0 +1,96 @@
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .password-input {
+      position: relative;
+
+      input {
+        width: 100%;
+        padding: 12px 40px 12px 12px; // Aumentado el padding derecho
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #666;
+        display: flex; // Asegura que el icono se muestre correctamente
+        align-items: center;
+        justify-content: center;
+        width: 30px; // Ancho fijo para el botón
+        height: 30px; // Altura fija para el botón
+        z-index: 1; // Asegura que el botón esté por encima del input
+      }
+    }
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #8e44ad;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .no-account {
+    margin-top: 20px;
+    text-align: center;
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: #8e44ad;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  }
+}

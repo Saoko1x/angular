@@ -1,0 +1,433 @@
+.home-container {
+  font-family: "Montserrat", sans-serif;
+
+  .greeting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    .greeting-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+
+      h2 {
+        margin: 0;
+        font-size: 36px;
+        color: #c1c1c1;
+        text-align: center;
+      }
+
+      p {
+        margin: 0;
+        font-size: 56px;
+        color: #000;
+        text-align: center;
+      }
+    }
+  }
+
+  .carousel {
+    height: 400px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+
+    button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.7);
+      color: #333;
+      border: none;
+      padding: 12px 15px;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      &.prev {
+        left: 20px;
+      }
+      &.next {
+        right: 20px;
+      }
+    }
+  }
+
+  .card-section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(200px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card-section {
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 25% cover 50%;
+  }
+
+  .card-section {
+    min-height: 100vh; // Changed from fixed height
+    background-color: #f5f3f3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem; // Added padding
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .articles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    article {
+      --img-scale: 1.001;
+      --title-color: black;
+      --link-icon-translate: -20px;
+      --link-icon-opacity: 0;
+      position: relative;
+      border-radius: 16px;
+      box-shadow: none;
+      background: #fff;
+      transform-origin: center;
+      transition: all 0.4s ease-in-out;
+      overflow: hidden;
+      width: 100%; // Ensure full width
+      max-width: 400px; // Limit maximum width
+      margin: 0 auto; // Center the article
+
+      img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+      }
+    }
+
+    article a::after {
+      position: absolute;
+      inset-block: 0;
+      inset-inline: 0;
+      cursor: pointer;
+      content: "";
+    }
+
+    /* basic article elements styling */
+    article h2 {
+      margin: 0 0 18px 0;
+      font-size: 1.9rem;
+      letter-spacing: 0.06em;
+      color: var(--title-color);
+      transition: color 0.3s ease-out;
+    }
+
+    figure {
+      margin: 0;
+      padding: 0;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+
+    article img {
+      max-width: 100%;
+      transform-origin: center;
+      transform: scale(var(--img-scale));
+      transition: transform 0.4s ease-in-out;
+      cursor: pointer; // Add this line to show a pointer cursor on hover
+    }
+
+    .article-body {
+      padding: 24px;
+    }
+
+    article a {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: #28666e;
+    }
+
+    article a:focus {
+      outline: 1px dotted #28666e;
+    }
+
+    article a .icon {
+      min-width: 24px;
+      width: 24px;
+      height: 24px;
+      margin-left: 5px;
+      transform: translateX(var(--link-icon-translate));
+      opacity: var(--link-icon-opacity);
+      transition: all 0.3s;
+    }
+
+    /* using the has() relational pseudo selector to update our custom properties */
+    article:has(:hover, :focus) {
+      --img-scale: 1.1;
+      --title-color: #28666e;
+      --link-icon-translate: 0;
+      --link-icon-opacity: 1;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+        rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    }
+
+    /************************ 
+    Generic layout (demo looks)
+    **************************/
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 48px 0;
+      font-family: "Figtree", sans-serif;
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      background-image: linear-gradient(45deg, #7c9885, #b5b682);
+      min-height: 100vh;
+    }
+
+    .articles {
+      display: grid;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    @media screen and (max-width: 960px) {
+      article {
+        container: card/inline-size;
+      }
+      .article-body p {
+        display: none;
+      }
+    }
+
+    @container card (min-width: 380px) {
+      .article-wrapper {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 16px;
+      }
+      .article-body {
+        padding-left: 0;
+      }
+      figure {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      figure img {
+        height: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+    }
+
+    .sr-only:not(:focus):not(:active) {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+  }
+
+  .about-us {
+    @keyframes highlight {
+      to {
+        background-position: 0;
+      }
+    }
+
+    mark {
+      animation: highlight linear forwards;
+      animation-timeline: view(60% 20%);
+      background: linear-gradient(
+        to right,
+        oklch(0.86 0.19 84.89 / 1) 50%,
+        oklch(0.86 0.19 84.89 / 0) 50%
+      );
+      background-position: 100%;
+      background-size: 200% 100%;
+      border-radius: 0.125rem;
+      padding-inline: 0.125rem;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    article {
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      width: 100%;
+
+      & .content {
+        padding-block: 2rem 30svh;
+        width: min(600px, 90vw);
+      }
+
+      & img {
+        object-fit: cover;
+        height: max(40svh, 40vw);
+        width: 100%;
+      }
+    }
+
+    :is(h1, h2) {
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    h2 {
+      margin-block-start: 2rem;
+    }
+  }
+
+  .list-button,
+  .logout-button {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-right: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+  }
+
+  .logout-button {
+    background-color: #dc3545;
+
+    &:hover {
+      background-color: #bd2130;
+    }
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    img {
+      max-width: 90%;
+      max-height: 90vh;
+      object-fit: contain;
+      width: auto; // Allow image to maintain aspect ratio
+      height: auto; // Allow image to maintain aspect ratio
+    }
+  }
+}
+
+// Media queries for responsiveness
+@media screen and (max-width: 768px) {
+  .card-section {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .articles {
+      grid-template-columns: 1fr; // Single column on smaller screens
+    }
+  }
+
+  .modal img {
+    max-width: 95%;
+    max-height: 95vh;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .card-section {
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    article {
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
