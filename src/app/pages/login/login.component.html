@@ -1,5 +1,5 @@
 @if (isLoginView) {
-<form class="login-form">
+<form [formGroup]="loginForm" class="login-form" (ngSubmit)="onLogin()">
   <h2>Iniciar sesión</h2>
   <p>Ingresa tus credenciales para acceder a tu cuenta</p>
 
@@ -8,10 +8,19 @@
     <input
       type="email"
       id="email"
-      name="email"
-      [(ngModel)]="userRegisterObj.email"
+      formControlName="email"
       placeholder="tu@ejemplo.com"
     />
+    @if (getFormControl(loginForm, 'email')?.invalid &&
+    getFormControl(loginForm, 'email')?.touched) {
+    <div class="error-message">
+      @if (getFormControl(loginForm, 'email')?.errors?.['required']) {
+      <p>El correo electrónico es requerido.</p>
+      } @if (getFormControl(loginForm, 'email')?.errors?.['email']) {
+      <p>Por favor, ingrese un correo electrónico válido.</p>
+      }
+    </div>
+    }
   </div>
 
   <div class="form-group">
@@ -20,8 +29,7 @@
       <input
         [type]="showPassword ? 'text' : 'password'"
         id="password"
-        name="password"
-        [(ngModel)]="userRegisterObj.password"
+        formControlName="password"
         placeholder="••••••••"
       />
       <button
@@ -29,12 +37,28 @@
         (click)="togglePasswordVisibility()"
         class="password-toggle"
       >
-        <i class="fas fa-eye{{ showPassword ? '-slash' : '' }}">showPassword</i>
+        <i class="fas fa-eye{{ showPassword ? '-slash' : '' }}">show</i>
       </button>
     </div>
+    @if (getFormControl(loginForm, 'password')?.invalid &&
+    getFormControl(loginForm, 'password')?.touched) {
+    <div class="error-message">
+      @if (getFormControl(loginForm, 'password')?.errors?.['required']) {
+      <p>La contraseña es requerida.</p>
+      } @if (getFormControl(loginForm, 'password')?.errors?.['minlength']) {
+      <p>La contraseña debe tener al menos 6 caracteres.</p>
+      }
+    </div>
+    }
   </div>
 
-  <button type="submit" (click)="onLogin()">Iniciar sesión</button>
+  <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
+
+  @if (loginForm.valid && loginForm.touched) {
+  <div class="success-message">
+    <p>Formulario válido. Puede iniciar sesión.</p>
+  </div>
+  }
 
   <div class="no-account">
     <p>¿No tienes una cuenta?</p>
@@ -43,7 +67,7 @@
 </form>
 } @else {
 <!-- Register form -->
-<form class="login-form">
+<form [formGroup]="registerForm" class="login-form" (ngSubmit)="onRegister()">
   <h2>Registrarse</h2>
   <p>Crea una nueva cuenta para acceder a nuestros servicios</p>
 
@@ -52,10 +76,15 @@
     <input
       type="text"
       id="username"
-      name="username"
-      [(ngModel)]="userRegisterObj.username"
+      formControlName="username"
       placeholder="Tu nombre de usuario"
     />
+    @if (getFormControl(registerForm, 'username')?.invalid &&
+    getFormControl(registerForm, 'username')?.touched) {
+    <div class="error-message">
+      <p>El nombre de usuario es requerido.</p>
+    </div>
+    }
   </div>
 
   <div class="form-group">
@@ -63,10 +92,19 @@
     <input
       type="email"
       id="email"
-      name="email"
-      [(ngModel)]="userRegisterObj.email"
+      formControlName="email"
       placeholder="tu@ejemplo.com"
     />
+    @if (getFormControl(registerForm, 'email')?.invalid &&
+    getFormControl(registerForm, 'email')?.touched) {
+    <div class="error-message">
+      @if (getFormControl(registerForm, 'email')?.errors?.['required']) {
+      <p>El correo electrónico es requerido.</p>
+      } @if (getFormControl(registerForm, 'email')?.errors?.['email']) {
+      <p>Por favor, ingrese un correo electrónico válido.</p>
+      }
+    </div>
+    }
   </div>
 
   <div class="form-group">
@@ -75,8 +113,7 @@
       <input
         [type]="showPassword ? 'text' : 'password'"
         id="password"
-        name="password"
-        [(ngModel)]="userRegisterObj.password"
+        formControlName="password"
         placeholder="••••••••"
       />
       <button
@@ -84,12 +121,28 @@
         (click)="togglePasswordVisibility()"
         class="password-toggle"
       >
-        <i class="fas fa-eye{{ showPassword ? '-slash' : '' }}"></i>
+        <i class="fas fa-eye{{ showPassword ? '-slash' : '' }}">show</i>
       </button>
     </div>
+    @if (getFormControl(registerForm, 'password')?.invalid &&
+    getFormControl(registerForm, 'password')?.touched) {
+    <div class="error-message">
+      @if (getFormControl(registerForm, 'password')?.errors?.['required']) {
+      <p>La contraseña es requerida.</p>
+      } @if (getFormControl(registerForm, 'password')?.errors?.['minlength']) {
+      <p>La contraseña debe tener al menos 6 caracteres.</p>
+      }
+    </div>
+    }
   </div>
 
-  <button type="submit" (click)="onRegister()">Registrarse</button>
+  <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
+
+  @if (registerForm.valid && registerForm.touched) {
+  <div class="success-message">
+    <p>Formulario válido. Puede registrarse.</p>
+  </div>
+  }
 
   <div class="no-account">
     <p>¿Ya tienes una cuenta?</p>

@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, inject, PLATFORM_ID, Inject } from '@angular/core';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { AvatarModule } from 'ngx-avatars';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, AvatarModule],
 })
 export class HomeComponent implements OnInit {
   isLoggedIn: boolean = false;
@@ -41,23 +43,48 @@ export class HomeComponent implements OnInit {
     },
   ];
   modalImage: string | null = null;
+  selectedGif: any = null;
 
   router = inject(Router);
+  route = inject(ActivatedRoute);
 
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    this.checkLoginStatus();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkLoginStatus();
+    }
+    this.route.fragment.subscribe((fragment) => {
+      if (fragment === 'selected-gif') {
+        this.scrollToBottom();
+      }
+    });
+    this.route.queryParams.subscribe((params) => {
+      if (params['gif']) {
+        this.selectedGif = JSON.parse(params['gif']);
+        this.scrollToBottom();
+      }
+    });
   }
 
   checkLoginStatus(): void {
-    const isLocalData = localStorage.getItem('angular18Local');
-    if (isLocalData !== null) {
-      const users = JSON.parse(isLocalData);
-      const loggedInUser = users.find((user: any) => user.isLoggedIn === true);
-      if (loggedInUser) {
-        this.isLoggedIn = true;
-        this.userEmail = loggedInUser.username;
+    if (isPlatformBrowser(this.platformId)) {
+      const isLocalData = localStorage.getItem('angular18Local');
+      if (isLocalData !== null) {
+        const users = JSON.parse(isLocalData);
+        const loggedInUser = users.find(
+          (user: any) => user.isLoggedIn === true
+        );
+        if (loggedInUser) {
+          this.isLoggedIn = true;
+          this.userEmail = loggedInUser.username;
+        } else {
+          this.isLoggedIn = false;
+          this.userEmail = '';
+        }
+      } else {
+        this.isLoggedIn = false;
+        this.userEmail = '';
       }
     }
   }
@@ -82,19 +109,31 @@ export class HomeComponent implements OnInit {
   }
 
   onLogout(): void {
-    const isLocalData = localStorage.getItem('angular18Local');
-    if (isLocalData !== null) {
-      const users = JSON.parse(isLocalData);
-      const updatedUsers = users.map((user: any) => {
-        if (user.email === this.userEmail) {
-          return { ...user, isLoggedIn: false };
-        }
-        return user;
-      });
-      localStorage.setItem('angular18Local', JSON.stringify(updatedUsers));
+    if (isPlatformBrowser(this.platformId)) {
+      const isLocalData = localStorage.getItem('angular18Local');
+      if (isLocalData !== null) {
+        const users = JSON.parse(isLocalData);
+        const updatedUsers = users.map((user: any) => {
+          if (user.email === this.userEmail) {
+            return { ...user, isLoggedIn: false };
+          }
+          return user;
+        });
+        localStorage.setItem('angular18Local', JSON.stringify(updatedUsers));
+      }
     }
     this.isLoggedIn = false;
     this.userEmail = '';
     this.router.navigateByUrl('/login');
+  }
+
+  onList(): void {
+    this.router.navigateByUrl('/list');
+  }
+
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 100);
   }
 }

@@ -17,7 +17,7 @@
       h2 {
         margin: 0;
         font-size: 36px;
-        color: #c1c1c1;
+        color: #109e0b;
         text-align: center;
       }
 
@@ -299,6 +299,9 @@
       }
     }
 
+    background-color: #000;
+    color: #fff;
+
     mark {
       animation: highlight linear forwards;
       animation-timeline: view(60% 20%);
@@ -345,32 +348,69 @@
     }
   }
 
-  .list-button,
-  .logout-button {
-    display: inline-block;
-    padding: 12px 24px;
-    margin-right: 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  // ... existing code ...
 
-    &:hover {
-      background-color: #0056b3;
-      transform: translateY(-2px);
+  .buttons-section {
+    min-height: 100vh;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
     }
-  }
 
-  .logout-button {
-    background-color: #dc3545;
+    .list-button {
+      display: inline-block;
+      padding: 12px 24px;
+      height: 50px;
+      margin-right: 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
 
-    &:hover {
-      background-color: #bd2130;
+      @media (max-width: 768px) {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+
+      &:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+      }
+    }
+
+    .selected-gif-section {
+      text-align: center;
+
+      h2 {
+        margin-bottom: 15px;
+      }
+
+      .gif-container {
+        h3 {
+          margin-bottom: 10px;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+          max-height: 300px;
+          object-fit: contain;
+
+          @media (max-width: 768px) {
+            max-height: 200px;
+          }
+        }
+      }
     }
   }
 

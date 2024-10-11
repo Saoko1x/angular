@@ -2,7 +2,7 @@
   <!-- Sección de saludo -->
   <div *ngIf="isLoggedIn" class="greeting">
     <div class="greeting-content">
-      <svg
+      <!-- <svg
         xmlns="http://www.w3.org/2000/svg"
         width="150"
         height="150"
@@ -30,7 +30,9 @@
           d="M454.09009,77.91016C403.8501,27.6709,337.05005,0,266,0S128.15015,27.6709,77.90991,77.91016C27.67017,128.15039,0,194.9502,0,266c0,64.85059,23.05005,126.16016,65.29004,174.57031,4.03003,4.62988,8.23999,9.13965,12.61987,13.52051,1.03003,1.0293,2.07007,2.05957,3.12012,3.05957,5.84009,5.66016,11.89014,11.02051,18.14014,16.05957,.02979,.03027,.0498,.05078,.07983,.07031,47.11012,38.0498,105.3401,58.71973,166.75001,58.71973,71.05005,0,137.8501-27.66992,188.09009-77.90918,3.73999-3.74023,7.34985-7.57031,10.83008-11.48047,43.36987-48.71973,67.07983-110.83984,67.07983-176.61035,0-71.0498-27.66992-137.84961-77.90991-188.08984Zm10.17993,362.20996c-7.86987,8.9502-16.33008,17.37012-25.33008,25.18066-17.06982,14.84961-36.06982,27.5293-56.55981,37.62988-7.19019,3.5498-14.56006,6.7793-22.1001,9.66992-29.29004,11.24023-61.08008,17.39941-94.28003,17.39941-32.04004,0-62.76001-5.73926-91.18994-16.23926-11.67017-4.30078-22.94995-9.41016-33.78003-15.26074-1.59009-.85938-3.16992-1.72949-4.73999-2.61914-8.26001-4.68066-16.25-9.79004-23.91992-15.31055-10.98999-7.87988-21.3501-16.58984-30.98022-26.03027-5.3999-5.29004-10.55981-10.7998-15.48975-16.5293C26.09009,391.77051,2,331.65039,2,266,2,120.43066,120.42993,2,266,2s264,118.43066,264,264c0,66.66016-24.82983,127.62012-65.72998,174.12012Z"
           fill="#3f3d56"
         />
-      </svg>
+      </svg> -->
+      <ngx-avatars [value]="userEmail | slice : 0 : 1 | uppercase" size="100">
+      </ngx-avatars>
       <h2>hey, i'm {{ userEmail }}</h2>
       <p>web developer / ux/ui designer /</p>
     </div>
@@ -75,7 +77,7 @@
   </div>
 
   <!-- Carrusel de imágenes -->
-  <!-- <section class="carousel-section">
+  <section class="carousel-section">
     <div class="carousel">
       <img
         *ngFor="let image of carouselImages; let i = index"
@@ -86,7 +88,7 @@
       <button class="prev" (click)="prevImage()">&lt;</button>
       <button class="next" (click)="nextImage()">&gt;</button>
     </div>
-  </section> -->
+  </section>
 
   <!-- Modal para imagen ampliada -->
   <div *ngIf="modalImage" class="modal" (click)="closeModal()">
@@ -161,8 +163,19 @@
   </div>
 
   <!-- Botón para ir al listado -->
-  <button class="list-button" routerLink="/">Ir al listado</button>
+  <section class="buttons-section">
+    <button class="list-button" (click)="onList()">Ir al listado</button>
 
-  <!-- Botón de logout -->
-  <button class="logout-button" (click)="onLogout()">Cerrar sesión</button>
+    <!-- Selected GIF section -->
+    <div *ngIf="selectedGif" class="selected-gif-section">
+      <h2>Selected GIF</h2>
+      <div class="gif-container">
+        <h3>{{ selectedGif.title }}</h3>
+        <img
+          [src]="selectedGif.images.original.url"
+          [alt]="selectedGif.title"
+        />
+      </div>
+    </div>
+  </section>
 </div>
