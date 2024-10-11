@@ -1,0 +1,24 @@
+<div class="list-container">
+  <h1>Gifs</h1>
+
+  <div class="gif-grid">
+    <div
+      *ngFor="let gif of paginatedGifs"
+      class="gif-item"
+      (click)="navigateToHome(gif)"
+    >
+      <h2>{{ gif.title }}</h2>
+      <img [src]="gif.images.original.url" [alt]="gif.title" />
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">
+      Previous
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+</div>

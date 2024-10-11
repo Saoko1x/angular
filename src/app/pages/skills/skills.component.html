@@ -1,0 +1,56 @@
+<div class="header">
+  <div class="sides">
+    <a href="#" class="logo">BLOG</a>
+  </div>
+  <div class="sides">
+    <a
+      href="https://jessup.edu/wp-content/uploads/2024/01/Is-Web-Development-Oversaturated.jpg"
+      class="menu"
+    >
+    </a>
+  </div>
+  <div class="info">
+    <h4>SKILLS</h4>
+    <h1>HEADERS ARE THE BEST</h1>
+    <div class="meta">
+      <a href="https://github.com/saoko1x" target="_b" class="author"></a><br />
+    </div>
+  </div>
+</div>
+
+<section class="skills-section">
+  <header>
+    <h2>Mis Habilidades</h2>
+  </header>
+
+  <div class="skills-grid">
+    <div *ngFor="let skill of skills" class="skill-card">
+      <h3>{{ skill.name }}</h3>
+      <div class="skill-level">
+        <div class="skill-bar" [style.width.%]="skill.level"></div>
+      </div>
+      <p>{{ skill.level }}%</p>
+    </div>
+  </div>
+
+  <form (ngSubmit)="addSkill()" class="add-skill-form">
+    <h3>Añadir nueva habilidad</h3>
+    <input
+      type="text"
+      [(ngModel)]="newSkill.name"
+      name="skillName"
+      placeholder="Nombre de la habilidad"
+      required
+    />
+    <input
+      type="number"
+      [(ngModel)]="newSkill.level"
+      name="skillLevel"
+      placeholder="Nivel (0-100)"
+      min="0"
+      max="100"
+      required
+    />
+    <button type="submit">Añadir Habilidad</button>
+  </form>
+</section>
